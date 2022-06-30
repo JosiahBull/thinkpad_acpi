@@ -1,0 +1,8 @@
+# Exclude files generated after a build
+src/*.cmd
+src/*.symvers
+src/*.mod
+src/*.mod*
+src/*.ko
+src/*.o
+src/*.order

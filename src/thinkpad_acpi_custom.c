@@ -11635,7 +11635,7 @@ static void thinkpad_acpi_module_exit(void)
 
 static int __init thinkpad_acpi_module_init(void)
 {
-	printk(KERN_INFO “Loading custom thinkpad_acpi driver.\n”);
+	printk(KERN_INFO "Loading custom thinkpad_acpi driver.\n");
 	const struct dmi_system_id *dmi_id;
 	int ret, i;
 

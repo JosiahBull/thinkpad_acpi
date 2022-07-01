@@ -39,7 +39,7 @@ You are replacing a kernel module, this comes with some degree of risk to your s
 
 **Install prerequisites:**
 ```bash
-# RHEL (F32+)
+# RHEL (F34+)
 sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget
 ```
 
@@ -78,7 +78,7 @@ yes | sudo rm -rd /usr/src/thinkpad_acpi-1.0
 
 ## Other Solutions
 
-- Monkey Patching the kernel (untested): https://blog.cloudflare.com/how-to-monkey-patch-the-linux-kernel/
+- Monkey Patching the kernel (untested): https://blog.cloudflare.com/how-to-monkey-patch-the-linux-kernel/ Credit to [@lachlan2k](https://github.com/lachlan2k) for finding this.
 ```bash
 # This is a guess for possible syntax, I provide no guarantees.
 probe module("thinkpad_acpi").function("lapsensor_get").return {
@@ -88,11 +88,13 @@ probe module("thinkpad_acpi").function("lapsensor_get").return {
 ```
 - Live being stuck in balanced power-mode because you type a little too hard, and the accelerometer is overly sensitive.
 
-## Relevant Issues
+## Relevant Discussions
 
 - https://ask.fedoraproject.org/t/what-is-lap-mode/9524
 - https://askubuntu.com/questions/1416465/how-to-disable-lap-detection
 - https://askubuntu.com/questions/1416567/disable-lap-mode-on-lenovo-laptop
+- https://www.reddit.com/r/thinkpad/comments/o2h6kf/linux_lap_mode/
+- https://bugzilla.redhat.com/show_bug.cgi?id=2014261
 
 ## Licensing & Contribution
 

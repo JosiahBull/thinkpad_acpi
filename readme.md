@@ -30,14 +30,12 @@ $ powerprofilesctl
 
 You are replacing a kernel module, this comes with some degree of risk to your system. If something goes wrong you should be able to reboot and it'll revert back, but kernel modules operate at a very low level on the OS with almost no checks. This module is currently still in development, so I'd be appreciative if any problems encountered are reported here.
 
-That being said, there isn't a fully completed installation method yet, however you can test if the module will work for you.
+That being said, there isn't a fully completed installation method yet, however you can test if the module will work for you. The current installation method will need to be repeated each time your kernel updates, integration with dkms will fix this issue.
 
 **Install prerequisites:**
 ```bash
-# Debian
-sudo apt-get install build-essential linux-headers-`uname -r`
 # RHEL (F32+)
-sudo dnf install make automake gcc gcc-c++ kernel-devel
+sudo dnf install make automake gcc gcc-c++ kernel-devel dkms
 ```
 
 **Install module:**
@@ -46,6 +44,13 @@ git clone https://github.com/JosiahBull/thinkpad_acpi
 cd thinkpad_acpi/src
 make
 sudo rmmod thinkpad_acpi && sudo insmod thinkpad_acpi_custom.ko
+# Stop and validate the module is working as intended, the next step will load it at BOOT, which could brick your system (note that if this does occur, you can blacklist `thinkpad_acpi_custom` in your kernel boot options to restore functionality to the system).
+sudo make install
+```
+
+**Uninstall module**
+```bash
+sudo make uninstall
 ```
 
 If your power-mode is now changeable, it worked! If you get an error about the key not being accepted, you may need to disable secureboot in your bios.

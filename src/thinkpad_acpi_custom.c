@@ -8,7 +8,7 @@
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
-#define TPACPI_VERSION "0.27"
+#define TPACPI_VERSION "0.01"
 #define TPACPI_SYSFS_VERSION 0x030000
 
 /*

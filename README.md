@@ -32,6 +32,7 @@ $ powerprofilesctl
 These are distros I have actually tested the script on.
 - Fedora 34/35/36
 - Rocky Linux 8
+- ubuntu 20.04
 
 ## Installation
 
@@ -41,6 +42,8 @@ You are replacing a kernel module, this comes with some degree of risk to your s
 ```bash
 # RHEL (F34+)
 sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget openssl
+# Ubuntu
+sudo apt-get update && sudo apt-get install build-essential dkms
 ```
 
 **Install module:**
@@ -51,10 +54,10 @@ cd thinkpad_acpi
 sudo cp -R . /usr/src/thinkpad_acpi-1.0
 
 # Add the module to dkms
-# !!!IMPORTANT!!! An internet connection is required for this step! A script will automatically download and patch files from the linux kernel. See scripts/download.sh for more information.
 sudo dkms add -m thinkpad_acpi/1.0
 
 # Build the module
+# !!!IMPORTANT!!! An internet connection is required for this step! A script will automatically download and patch files from the linux kernel. See scripts/download.sh for more information.
 sudo dkms build thinkpad_acpi/1.0
 # Install the module
 sudo dkms install thinkpad_acpi/1.0

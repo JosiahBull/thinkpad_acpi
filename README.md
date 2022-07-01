@@ -40,7 +40,7 @@ You are replacing a kernel module, this comes with some degree of risk to your s
 **Install prerequisites:**
 ```bash
 # RHEL (F34+)
-sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget
+sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget openssl
 ```
 
 **Install module:**
@@ -48,7 +48,7 @@ sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget
 git clone https://github.com/JosiahBull/thinkpad_acpi
 cd thinkpad_acpi
 # Copy the file for dkms
-sudo dkms cp -R . /usr/src/thinkpad_acpi-1.0
+sudo cp -R . /usr/src/thinkpad_acpi-1.0
 
 # Add the module to dkms
 # !!!IMPORTANT!!! An internet connection is required for this step! A script will automatically download and patch files from the linux kernel. See scripts/download.sh for more information.

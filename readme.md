@@ -26,6 +26,11 @@ $ powerprofilesctl
 
 ```
 
+## Supported Operating Systems
+These are distros I have actually tested the script on. While it should work on other distros, no guarentees can be made.
+- Fedora 34/35/36
+- Rocky Linux 8
+
 ## Installation
 
 You are replacing a kernel module, this comes with some degree of risk to your system. If something goes wrong you should be able to reboot and it'll revert back, but kernel modules operate at a very low level on the OS with almost no checks. This module is currently still in development, so I'd be appreciative if any problems encountered are reported here.

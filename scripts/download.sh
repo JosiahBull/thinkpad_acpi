@@ -9,13 +9,13 @@ VERSION="${VERSION%%-*}";
 echo "Downloading relevant files from linux git repsoitory...";
 
 # Collect files from github
-wget -q "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/thinkpad_acpi.c?h=v$VERSION" -O thinkpad_acpi.c;
+wget -q "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/thinkpad_acpi.c?h=v$VERSION" -o thinkpad_acpi.c;
 if [ $? -ne 0 ]; then
     echo "Failed to download thinkpad_acpi.c";
     exit 1;
 fi
 
-wget -q "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/dual_accel_detect.h?h=v$VERSION" -O dual_accel_detect.h;
+wget -q "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/dual_accel_detect.h?h=v$VERSION" -o dual_accel_detect.h;
 if [ $? -ne 0 ]; then
     echo "Failed to download dual_accel_detect.h";
     exit 1;

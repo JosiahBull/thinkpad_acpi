@@ -30,6 +30,7 @@ $ powerprofilesctl
 
 ## Will this solution work for me?
 Some thinkpads don't seem to respect the changes, they may have some other kernel/hardware level control. I'm investigating this, but for the time being you can test if your device will benefit without modifying your kernel by just unloading the `thinkpad_acpi` module entirely. If functionality is affected, a simple reboot will restore it.
+
 **Unload Module**
 ```bash
 sudo modprobe -r thinkpad_acpi

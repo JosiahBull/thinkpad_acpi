@@ -35,6 +35,7 @@ Some thinkpads don't seem to respect the changes, they may have some other kerne
 ```bash
 sudo modprobe -r thinkpad_acpi
 ```
+
 **Reload Module**
 ```bash
 sudo modprobe thinkpad_acpi
@@ -43,8 +44,8 @@ sudo modprobe thinkpad_acpi
 ## Supported Operating Systems
 These are distros I have actually tested the script on.
 - Fedora 34/35/36
-- Rocky Linux 8
-- ubuntu 20.04/22.04
+- Rocky 8.6
+- Ubuntu 20.04/22.04
 
 ## Installation
 
@@ -54,7 +55,7 @@ You are replacing a kernel module, this comes with some degree of risk to your s
 ```bash
 # RHEL (F34+)
 sudo dnf update
-sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget openssl git
+sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget openssl
 
 # Ubuntu (20.04+)
 sudo apt-get update && sudo apt-get upgrade
@@ -68,20 +69,26 @@ sudo reboot
 ```bash
 git clone https://github.com/JosiahBull/thinkpad_acpi
 cd thinkpad_acpi
-# Copy the file for dkms
+
+# Copy the files for dkms
 sudo cp -R . /usr/src/thinkpad_acpi-1.0
 
 # Add the module to dkms
 sudo dkms add -m thinkpad_acpi/1.0
 
 # Build the module
-# !!!IMPORTANT!!! An internet connection is required for this step! A script will automatically download and patch files from the linux kernel. See scripts/download.sh for more information.
+# !!!IMPORTANT!!! An internet connection is required for this step! A script will automatically download
+# and patch files from the linux kernel. See scripts/download.sh for more information.
 sudo dkms build thinkpad_acpi/1.0
+
 # Install the module
 sudo dkms install thinkpad_acpi/1.0
+
+# Reboot to reload the kernel
+sudo reboot
 ```
 
-Reboot your system, if you run `sudo modinfo thinkpad_acpi`, you should see the version is set to:
+Upon running `sudo modinfo thinkpad_acpi`, you should see the version is set to:
 ```bash
 version: 420.26
 singer: DKMS module signing key
@@ -96,6 +103,7 @@ Uninstallation is easy, dkms should restore the original kernel module.
 sudo dkms uninstall thinkpad_acpi/1.0
 sudo dkms remove thinkpad_acpi/1.0
 yes | sudo rm -rd /usr/src/thinkpad_acpi-1.0
+sudo reboot
 ```
 
 ## Other Solutions
@@ -108,8 +116,6 @@ probe module("thinkpad_acpi").function("lapsensor_get").return {
     *state = 1;
 }
 ```
-- Live being stuck in balanced power-mode because you type a little too hard, and the accelerometer is overly sensitive.
-
 ## Relevant Discussions
 
 - https://ask.fedoraproject.org/t/what-is-lap-mode/9524

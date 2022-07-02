@@ -28,11 +28,22 @@ $ powerprofilesctl
 
 ```
 
+## Will this solution work for me?
+Some thinkpads don't seem to respect the changes, they may have some other kernel/hardware level control. I'm investigating this, but for the time being you can test if your device will benefit without modifying your kernel by just unloading the `thinkpad_acpi` module entirely. If functionality is affected, a simple reboot will restore it.
+**Unload Module**
+```bash
+sudo modprobe -r thinkpad_acpi
+```
+**Reload Module**
+```bash
+sudo modprobe thinkpad_acpi
+```
+
 ## Supported Operating Systems
 These are distros I have actually tested the script on.
 - Fedora 34/35/36
 - Rocky Linux 8
-- ubuntu 20.04
+- ubuntu 20.04/22.04
 
 ## Installation
 
@@ -41,9 +52,15 @@ You are replacing a kernel module, this comes with some degree of risk to your s
 **Install prerequisites:**
 ```bash
 # RHEL (F34+)
-sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget openssl
-# Ubuntu
-sudo apt-get update && sudo apt-get install build-essential dkms
+sudo dnf update
+sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget openssl git
+
+# Ubuntu (20.04+)
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-get install build-essential dkms git
+
+# Reboot after updates!
+sudo reboot
 ```
 
 **Install module:**
@@ -63,9 +80,10 @@ sudo dkms build thinkpad_acpi/1.0
 sudo dkms install thinkpad_acpi/1.0
 ```
 
-Reboot your system, if you run `dmesg | grep thinkpad`, you should see a warning:
+Reboot your system, if you run `sudo modinfo thinkpad_acpi`, you should see the version is set to:
 ```bash
-thinkpad_acpi: loading out-of-tree module taints kernel.
+version: 420.26
+singer: DKMS module signing key
 ```
 
 Congratulations! You've patched your kernel. The lap-mode sensor is now disabled.

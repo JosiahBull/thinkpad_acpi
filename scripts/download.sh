@@ -6,16 +6,25 @@
 VERSION=$(uname -r);
 VERSION="${VERSION%%-*}";
 
+# Fix for issue #2, linux kernel website tracks versioning with only x.x, unless there is a minor issue in which case it tracks x.x.x.
+# however, `uname -r` always returns x.x.x, so if we trim the last two chars off the number in *.0 cases, we can collect the files
+# correctly.
+if [[ ${#VERSION} -ge 4 ]] && [[ $VERSION == *.0 ]]; then
+    echo "Version is *.0, correcting version script";
+    # trim last 2 chars from string
+    VERSION="${VERSION::-2}";
+fi
+
 echo "Downloading relevant files from linux git repsoitory...";
 
 # Collect files from github
-wget -q "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/thinkpad_acpi.c?h=v$VERSION" -O "thinkpad_acpi.c";
+wget "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/thinkpad_acpi.c?h=v$VERSION" -O "thinkpad_acpi.c";
 if [ $? -ne 0 ]; then
     echo "Failed to download thinkpad_acpi.c";
     exit 1;
 fi
 
-wget -q "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/dual_accel_detect.h?h=v$VERSION" -O "dual_accel_detect.h";
+wget "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/dual_accel_detect.h?h=v$VERSION" -O "dual_accel_detect.h";
 if [ $? -ne 0 ]; then
     echo "Failed to download dual_accel_detect.h";
     exit 1;

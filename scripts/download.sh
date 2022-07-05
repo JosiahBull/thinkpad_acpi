@@ -5,14 +5,23 @@
 
 VERSION=$(uname -r);
 VERSION="${VERSION%%-*}";
+TRIMMED_V="${VERSION::-2}";
+DO_ACCEL=true
+
+# Fix for issue #3, `dual_accel_detect.h` only got added in kernel v5.14, if we are less than that set the flag false so we don't
+# attempt to download `dual_accel_detect.h`.
+IFS='.' read -ra BROKEN_V <<< "$TRIMMED_V";
+if [[ ${BROKEN_V[0]} -le 4 ]] ||  ([[ ${BROKEN_V[0]} -ge 5 ]] && [[ ${BROKEN_V[1]} -le 13 ]]); then
+    echo "Kernel version is < 5.14, dual_accel_detect.h download is not required";
+    DO_ACCEL=false
+fi
 
 # Fix for issue #2, linux kernel website tracks versioning with only x.x, unless there is a minor issue in which case it tracks x.x.x.
 # however, `uname -r` always returns x.x.x, so if we trim the last two chars off the number in *.0 cases, we can collect the files
 # correctly.
 if [[ ${#VERSION} -ge 4 ]] && [[ $VERSION == *.0 ]]; then
     echo "Version is *.0, correcting version script";
-    # trim last 2 chars from string
-    VERSION="${VERSION::-2}";
+    VERSION=TRIMMED_V;
 fi
 
 echo "Downloading relevant files from linux git repsoitory...";
@@ -24,10 +33,12 @@ if [ $? -ne 0 ]; then
     exit 1;
 fi
 
-wget "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/dual_accel_detect.h?h=v$VERSION" -O "dual_accel_detect.h";
-if [ $? -ne 0 ]; then
-    echo "Failed to download dual_accel_detect.h";
-    exit 1;
+if [ $DO_ACCEL = true ]; then
+    wget "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/dual_accel_detect.h?h=v$VERSION" -O "dual_accel_detect.h";
+    if [ $? -ne 0 ]; then
+        echo "Failed to download dual_accel_detect.h";
+        exit 1;
+    fi
 fi
 
 echo "Applying modifications to thinkpad_acpi.c...";

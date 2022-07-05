@@ -29,22 +29,11 @@ $ powerprofilesctl
 ```
 
 ## Will this solution work for me?
-Some thinkpads don't seem to respect the changes, they may have some other kernel/hardware level control. I'm investigating this, but for the time being you can test if your device will benefit without modifying your kernel by just unloading the `thinkpad_acpi` module entirely. If functionality is affected, a simple reboot will restore it.
-
-**Unload Module**
-```bash
-sudo modprobe -r thinkpad_acpi
-```
-
-**Reload Module**
-```bash
-sudo modprobe thinkpad_acpi
-```
+Some thinkpads don't seem to respect the changes, they may have some other kernel/hardware level control, I'm not sure what causes this.
 
 ## Supported Operating Systems
 These are distros I have actually tested the script on.
 - Fedora 34/35/36
-- Rocky 8.6
 - Ubuntu 20.04/22.04
 
 ## Installation

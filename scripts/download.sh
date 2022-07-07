@@ -21,7 +21,7 @@ fi
 # correctly.
 if [[ ${#VERSION} -ge 4 ]] && [[ $VERSION == *.0 ]]; then
     echo "Version is *.0, correcting version script";
-    VERSION=TRIMMED_V;
+    VERSION=$TRIMMED_V;
 fi
 
 echo "Downloading relevant files from linux git repsoitory...";

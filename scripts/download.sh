@@ -27,14 +27,14 @@ fi
 echo "Downloading relevant files from linux git repsoitory...";
 
 # Collect files from github
-wget "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/thinkpad_acpi.c?h=v$VERSION" -O "thinkpad_acpi.c";
+wget "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/thinkpad_acpi.c?h=v$TRIMMED_V" -O "thinkpad_acpi.c";
 if [ $? -ne 0 ]; then
     echo "Failed to download thinkpad_acpi.c";
     exit 1;
 fi
 
 if [ $DO_ACCEL = true ]; then
-    wget "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/dual_accel_detect.h?h=v$VERSION" -O "dual_accel_detect.h";
+    wget "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/dual_accel_detect.h?h=v$TRIMMED_V" -O "dual_accel_detect.h";
     if [ $? -ne 0 ]; then
         echo "Failed to download dual_accel_detect.h";
         exit 1;

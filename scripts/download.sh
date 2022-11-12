@@ -10,8 +10,8 @@ DO_ACCEL=true
 
 # Fix for issue #3, `dual_accel_detect.h` only got added in kernel v5.14, if we are less than that set the flag false so we don't
 # attempt to download `dual_accel_detect.h`.
-IFS='.' read -ra BROKEN_V <<< "$TRIMMED_V";
-if [[ ${BROKEN_V[0]} -le 4 ]] ||  ([[ ${BROKEN_V[0]} -ge 5 ]] && [[ ${BROKEN_V[1]} -le 13 ]]); then
+printf '%s\n' "$VERSION" "5.14" | sort -CV;
+if [ "$?" -ne 1 ]; then
     echo "Kernel version is < 5.14, dual_accel_detect.h download is not required";
     DO_ACCEL=false
 fi

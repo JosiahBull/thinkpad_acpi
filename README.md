@@ -38,6 +38,7 @@ These are distros I have actually tested the script on.
 
 - Fedora 34/35/36
 - Ubuntu 20.04/22.04
+- Manjaro Linux 18 (Illyria)
 
 ## Installation
 
@@ -53,6 +54,11 @@ sudo dnf install make automake gcc gcc-c++ kernel-devel dkms wget openssl
 # Ubuntu (20.04+)
 sudo apt-get update && sudo apt-get upgrade
 sudo apt-get install build-essential dkms git
+
+# Arch Linux/Manjaro
+sudo pacman -Syu
+sudo pacman -S base-devel dkms git wget openssl linux-headers
+# You might need to install other linux-headers according to your kernel version
 
 # Reboot after updates!
 sudo reboot

@@ -4,16 +4,16 @@ During the purchase of a recent ThinkPad, I ran into an issue where I was forced
 
 Ostensibly this is because some of these devices can get dangerously hot on the bottom during use, but personally I prefer to have control over my device and what power-mode I'm in.
 
-
 This script works by downloading [`thinkpad_acpi`](https://github.com/torvalds/linux/blob/master/drivers/platform/x86/thinkpad_acpi.c) from the linux kernel, compiling it, and then patching the existing kernel module.
 
-
 ## Am I affected?
+
 In gnome power settings you might see this:
 
-<img src="./example-img.png" alt="screenshot of an output demonstrating lapmode enabled"/>
+![screenshot of an output demonstrating lapmode enabled](./example-img.png)
 
 Or, you may see this result from running the `powerprofilectl` command:
+
 ```bash
 $ powerprofilesctl
   performance:
@@ -29,10 +29,13 @@ $ powerprofilesctl
 ```
 
 ## Will this solution work for me?
+
 Some thinkpads don't seem to respect the changes, they may have some other kernel/hardware level control, I'm not sure what causes this.
 
 ## Supported Operating Systems
+
 These are distros I have actually tested the script on.
+
 - Fedora 34/35/36
 - Ubuntu 20.04/22.04
 
@@ -40,7 +43,8 @@ These are distros I have actually tested the script on.
 
 You are replacing a kernel module, this comes with some degree of risk to your system. Please consider backing up important data before beginning.
 
-**Install prerequisites:**
+### Install prerequisites
+
 ```bash
 # RHEL (F34+)
 sudo dnf update
@@ -54,7 +58,8 @@ sudo apt-get install build-essential dkms git
 sudo reboot
 ```
 
-**Install module:**
+### Install module
+
 ```bash
 git clone https://github.com/JosiahBull/thinkpad_acpi
 cd thinkpad_acpi
@@ -78,6 +83,7 @@ sudo reboot
 ```
 
 Upon running `sudo modinfo thinkpad_acpi`, you should see the version is set to:
+
 ```bash
 version: 420.26
 singer: DKMS module signing key
@@ -86,6 +92,7 @@ singer: DKMS module signing key
 Congratulations! You've patched your kernel. The lap-mode sensor is now disabled.
 
 ## Uninstallation
+
 Uninstallation is easy, dkms should restore the original kernel module.
 
 ```bash
@@ -97,7 +104,8 @@ sudo reboot
 
 ## Other Solutions
 
-- Monkey Patching the kernel (untested): https://blog.cloudflare.com/how-to-monkey-patch-the-linux-kernel/ Credit to [@lachlan2k](https://github.com/lachlan2k) for finding this.
+- Monkey Patching the kernel (untested): <https://blog.cloudflare.com/how-to-monkey-patch-the-linux-kernel/> Credit to [@lachlan2k](https://github.com/lachlan2k) for finding this.
+
 ```bash
 # This is a guess for possible syntax, I provide no guarantees.
 probe module("thinkpad_acpi").function("lapsensor_get").return {
@@ -105,13 +113,14 @@ probe module("thinkpad_acpi").function("lapsensor_get").return {
     *state = 1;
 }
 ```
+
 ## Relevant Discussions
 
-- https://ask.fedoraproject.org/t/what-is-lap-mode/9524
-- https://askubuntu.com/questions/1416465/how-to-disable-lap-detection
-- https://askubuntu.com/questions/1416567/disable-lap-mode-on-lenovo-laptop
-- https://www.reddit.com/r/thinkpad/comments/o2h6kf/linux_lap_mode/
-- https://bugzilla.redhat.com/show_bug.cgi?id=2014261
+- <https://ask.fedoraproject.org/t/what-is-lap-mode/9524>
+- <https://askubuntu.com/questions/1416465/how-to-disable-lap-detection>
+- <https://askubuntu.com/questions/1416567/disable-lap-mode-on-lenovo-laptop>
+- <https://www.reddit.com/r/thinkpad/comments/o2h6kf/linux_lap_mode/>
+- <https://bugzilla.redhat.com/show_bug.cgi?id=2014261>
 
 ## Licensing & Contribution
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# This script downloads the current thinkpad_acpi version from the linux github repository, and then attempts to modify the files
+# This script downloads the current thinkpad_acpi version from the linux kernel.org repository, and then attempts to modify the files
 # to remove the lap_mode sensor.
 
 VERSION=$(uname -r);
@@ -26,7 +26,7 @@ fi
 
 echo "Downloading relevant files from linux git repsoitory...";
 
-# Collect files from github
+# Collect files from kernel.org
 wget "https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/plain/drivers/platform/x86/thinkpad_acpi.c?h=v$VERSION" -O "thinkpad_acpi.c";
 if [ $? -ne 0 ]; then
     echo "Failed to download thinkpad_acpi.c";

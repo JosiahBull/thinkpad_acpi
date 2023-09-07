@@ -92,7 +92,7 @@ Upon running `sudo modinfo thinkpad_acpi`, you should see the version is set to:
 
 ```bash
 version: 420.26
-singer: DKMS module signing key
+signer: DKMS module signing key
 ```
 
 Congratulations! You've patched your kernel. The lap-mode sensor is now disabled.

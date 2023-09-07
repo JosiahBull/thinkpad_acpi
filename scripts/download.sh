@@ -44,10 +44,16 @@ fi
 echo "Applying modifications to thinkpad_acpi.c...";
 
 # Apply modifications to thinkpad_acpi.c
-# disable lapmode sensor
-sed -i 's/*state = output \& BIT(DYTC_GET_LAPMODE_BIT) ? true : false/*state = output \& BIT(DYTC_GET_LAPMODE_BIT) ? false : false/' thinkpad_acpi.c;
+# Disable lap_state
+sed -i 's/if (lap_state != state)/if (lap_state != false)/' thinkpad_acpi.c;
 if [ $? -ne 0 ]; then
-    echo "Failed to disable the lapmode sensor for thinkpad_acpi.c";
+    echo "Failed to disable lap_state set command for thinkpad_acpi.c";
+    exit 1;
+fi
+
+sed -i 's/lap_state = state/lap_state = false/' thinkpad_acpi.c;
+if [ $? -ne 0 ]; then
+    echo "Failed to disable lap_state set command for thinkpad_acpi.c";
     exit 1;
 fi
 

@@ -1,3 +1,5 @@
+# :warning: I no longer have a laptop with this acceleration sensor so can't reasonably maintain this repository, it has been archived. Be warned that there have been mixed results on newer kernals. :warning:
+
 # Linux Thinkpad Disable Lapmode
 
 During the purchase of a recent ThinkPad, I ran into an issue where I was forced to stay on the "balanced" power-mode. This is because some ThinkPads have a small accelerometer which detects if it's on an unstable surface (e.g. a lap).
